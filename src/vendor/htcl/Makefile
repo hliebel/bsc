@@ -1,4 +1,4 @@
-GHCFLAGS += -Wall $(shell pkg-config --silence-errors --cflags-only-I tcl || echo -I/usr/include/tcl)
+GHCFLAGS += -Wall ${TCL_INC_FLAGS}
 GHC ?= ghc
 
 # We use GHC to compile this, so it has the proper RTS includes

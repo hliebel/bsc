@@ -1793,6 +1793,9 @@ cxxLink errh flags toplevel names creation_time = do
             Darwin -> ["-dynamiclib", "-fPIC"] ++ libdirflags ++
                       ["-exported_symbols_list", exportmap] ++ stripflags ++
                       ["-o", soFile]
+            Freebsd -> ["-shared", "-fPIC", "-Wl,-Bsymbolic"] ++ libdirflags ++
+                       ["-Wl,--version-script=" ++ exportmap] ++ stripflags ++
+                       ["-o", soFile]
         -- show is used for quoting
         opts = map show $ linkFlags flags
         files = map show compile_names ++ ["-lm"] ++ userlibs
@@ -1829,8 +1832,9 @@ cxxLink errh flags toplevel names creation_time = do
 cleanseSharedLib :: ErrorHandle -> Flags -> String -> IO ()
 cleanseSharedLib errh flags soFile = do
     let switches = case getOSType of
-                      Linux  -> ["-x"]
-                      Darwin -> ["-u", "-x"]
+                      Linux   -> ["-x"]
+                      Freebsd -> ["-x"]
+                      Darwin  -> ["-u", "-x"]
         cmd = unwords $ ["strip"] ++ switches ++ [soFile]
     when (verbose flags) $ putStrLnF ("exec: " ++ cmd)
     rc <- system cmd

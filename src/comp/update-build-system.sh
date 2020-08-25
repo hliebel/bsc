@@ -9,12 +9,13 @@ OSTYPE=`${PLATFORM_SH} ostype`
 echo "module BuildSystem (OSType(..), osToString, getOSType) where" > BuildSystem.hs.new;
 echo "" >> BuildSystem.hs.new;
 
-echo "data OSType = Linux | Darwin" >> BuildSystem.hs.new;
+echo "data OSType = Linux | Darwin | Freebsd" >> BuildSystem.hs.new;
 echo "" >> BuildSystem.hs.new;
 
 echo "osToString :: OSType -> String" >> BuildSystem.hs.new;
 echo "osToString Linux  = \"Linux\"" >> BuildSystem.hs.new;
 echo "osToString Darwin = \"Darwin\"" >> BuildSystem.hs.new;
+echo "osToString Freebsd = \"Freebsd\"" >> BuildSystem.hs.new;
 echo "" >> BuildSystem.hs.new;
 
 echo "getOSType :: OSType" >> BuildSystem.hs.new;
