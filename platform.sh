@@ -110,9 +110,9 @@ if [ "$1" = "tclinc" ] ; then
     # If pkg-config doesn't work, try some well-known locations
     if [ -z "${TCL_INC_FLAGS}" ] ; then
         if [ -f "/usr/local/include/tcl${TCL_SUFFIX}/tcl.h" ] ; then
-            TCL_INC_FLAGS="/usr/local/include/tcl${TCL_SUFFIX}"
+            TCL_INC_FLAGS="-I/usr/local/include/tcl${TCL_SUFFIX}"
         elif [ -f "/usr/include/tcl${TCL_SUFFIX}/tcl.h" ] ; then
-            TCL_INC_FLAGS="/usr/include/tcl${TCL_SUFFIX}"
+            TCL_INC_FLAGS="-I/usr/include/tcl${TCL_SUFFIX}"
         else
             exit 1
         fi
