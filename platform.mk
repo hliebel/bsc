@@ -58,5 +58,17 @@ export CXXFLAGS
 ## --------------------
 ## Set up the TCL shell and include paths
 TCLSH = $(shell $(TOP)/platform.sh tclsh)
+ifeq ($(TCLSH), )
+$(error Unable to find tclsh)
+endif
+$(info Using tclsh: $(TCLSH))
 TCL_INC_FLAGS = $(shell $(TOP)/platform.sh tclinc)
+ifeq ($(TCL_INC_FLAGS), )
+$(error Unable to find tcl include directory)
+endif
+$(info Using tcl include flags: $(TCL_INC_FLAGS))
 TCL_LIB_FLAGS = $(shell $(TOP)/platform.sh tcllibs)
+ifeq ($(TCL_LIB_FLAGS), )
+$(error Unable to find tcl library flags)
+endif
+$(info Using tcl library flags: $(TCL_LIB_FLAGS))

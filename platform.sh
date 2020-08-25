@@ -99,13 +99,19 @@ if [ "$1" = "tclsh" ] ; then
     exit 0
 fi
 
+PKG_CONFIG=`which pkg-config`
+if [ -z "${PKG_CONFIG}" ] ; then
+	PKG_CONFIG='false'
+fi
+
+
 if [ "$1" = "tclinc" ] ; then
     # Try pkg-config
-    TCL_INC_FLAGS=`pkg-config --silence-errors --cflags-only-I tcl${TCL_SUFFIX}`
+    TCL_INC_FLAGS=`${PKG_CONFIG} --silence-errors --cflags-only-I tcl${TCL_SUFFIX}`
     # If pkg-config didn't work with the first prefix, try the alternative version.
     # For example, on FreeBSD, the tcl87 package installs tclsh8.7, but tcl87.pc
     if [ -z "${TCL_INC_FLAGS}" ] ; then
-        TCL_INC_FLAGS=`pkg-config --silence-errors --cflags-only-I tcl${TCL_ALT_SUFFIX}`
+        TCL_INC_FLAGS=`${PKG_CONFIG} --silence-errors --cflags-only-I tcl${TCL_ALT_SUFFIX}`
     fi
     # If pkg-config doesn't work, try some well-known locations
     if [ -z "${TCL_INC_FLAGS}" ] ; then
@@ -121,7 +127,7 @@ if [ "$1" = "tclinc" ] ; then
     exit 0
 fi
 
-if [ ${OSTYPE} == "Darwin" ] ; then
+if [ "${OSTYPE}" = "Darwin" ] ; then
     LIB_SUFFIX=dylib
 else
     LIB_SUFFIX=so
@@ -129,11 +135,11 @@ fi
 
 if [ "$1" = "tcllibs" ] ; then
     # Try pkg-config
-    TCL_LIB_FLAGS=`pkg-config --silence-errors --libs tcl${TCL_SUFFIX}`
+    TCL_LIB_FLAGS=`${PKG_CONFIG} --silence-errors --libs tcl${TCL_SUFFIX}`
     # If pkg-config didn't work with the first prefix, try the alternative version.
     # For example, on FreeBSD, the tcl87 package installs tclsh8.7, but tcl87.pc
     if [ -z "${TCL_LIB_FLAGS}" ] ; then
-        TCL_LIB_FLAGS=`pkg-config --silence-errors --libs tcl${TCL_ALT_SUFFIX}`
+        TCL_LIB_FLAGS=`${PKG_CONFIG} --silence-errors --libs tcl${TCL_ALT_SUFFIX}`
     fi
 
     if [ -n "${TCL_LIB_FLAGS}" ] ; then
@@ -151,6 +157,15 @@ if [ "$1" = "tcllibs" ] ; then
             fi
         done
     done
+    # If we're Linux, look for multiarch things
+    if [ "${OSTYPE}" = "Linux" ] ; then
+        for V in ${TCL_VER} ${TCL_SUFFIX} ${TCL_ALT_SUFFIX} ; do
+            if [ -f "/usr/lib/${MACHTYPE}-linux-gnu/libtcl${V}.${LIB_SUFFIX}" ] ; then
+                echo -ltcl${V}
+                exit 0
+            fi
+        done
+    fi
     exit 1
 fi
 
