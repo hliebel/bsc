@@ -1,5 +1,6 @@
 PWD:=$(shell pwd)
 TOP:=$(PWD)/../..
+WANT_TCL=yes
 
 include $(TOP)/platform.mk
 

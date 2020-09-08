@@ -1,3 +1,7 @@
+TOP = ../../..
+WANT_TCL=yes
+include $(TOP)/platform.mk
+
 GHCFLAGS += -Wall ${TCL_INC_FLAGS}
 GHC ?= ghc
 

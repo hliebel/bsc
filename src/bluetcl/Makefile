@@ -31,7 +31,7 @@ all: tclIndex
 # pkg_mkIndex.tcl is produced here
 .PHONY: tclIndex
 tclIndex: *.tcl
-	TCLSH=${TCLSH} ./tclIndex.sh "$(TCLFILES)" "$(PACKAGES)"
+	${TCLSH} ./tclIndex.sh "$(TCLFILES)" "$(PACKAGES)"
 
 .PHONY: install
 install: tclIndex

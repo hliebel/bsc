@@ -1,8 +1,3 @@
-#!/bin/sh
-
-#\
-exec ${TCLSH} "$0" "$@"
-
 set tclFiles [lindex $argv 0]
 set packFiles [lindex $argv 1]
 

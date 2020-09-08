@@ -45,7 +45,7 @@ all: install
 install clean full_clean:
 	$(MAKE)  -C vendor/stp   PREFIX=$(PREFIX)  $@
 	$(MAKE)  -C vendor/yices PREFIX=$(PREFIX)  $@
-	$(MAKE)  -C vendor/htcl  PREFIX=$(PREFIX) TCL_INC_FLAGS=$(TCL_INC_FLAGS) $@
+	$(MAKE)  -C vendor/htcl  PREFIX=$(PREFIX)  $@
 	# we need to build targets from here sequentially, as they operate in the same workspace
 	$(MAKE)  -C comp -j1   PREFIX=$(PREFIX)  $@
 	$(MAKE)  -C Libraries  PREFIX=$(PREFIX)  $@

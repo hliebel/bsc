@@ -57,6 +57,7 @@ export CXXFLAGS
 
 ## --------------------
 ## Set up the TCL shell and include paths
+ifneq ($(WANT_TCL),)
 TCLSH = $(shell $(TOP)/platform.sh tclsh)
 ifeq ($(TCLSH), )
 $(error Unable to find tclsh)
@@ -72,3 +73,4 @@ ifeq ($(TCL_LIB_FLAGS), )
 $(error Unable to find tcl library flags)
 endif
 $(info Using tcl library flags: $(TCL_LIB_FLAGS))
+endif
