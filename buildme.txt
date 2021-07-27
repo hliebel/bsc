@@ -1,0 +1,26 @@
+
+Bluespec
+
+install haskell and libs
+
+pkg install ghc hs-cabal-install tcl-wrapper  gperf autoconf flex bison iverilog
+cabal update
+cabal v1-install regex-compat syb old-time split
+ 
+
+git clone --recursive https://github.com/B-Lang-org/bsc
+
+
+time gmake clean PREFIX="/home/harry/work/fpga/bsc-install" 2>&1 | tee build.log
+time gmake -j3 install PREFIX="/home/harry/work/fpga/bsc-install" 2>&1 | tee build.log
+time gmake check PREFIX="/home/harry/work/fpga/bsc-install" 
+
+---> Not working
+
+There is a FreeBSD PR on the main repo.
+https://github.com/B-Lang-org/bsc/pull/260
+
+Follow it and make a branch here with all the required fixes.
+https://github.com/hliebel/bsc.git
+
+
