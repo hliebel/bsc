@@ -8,7 +8,7 @@ INCLUDE_DIR=$(STPDIR)/include
 HEADERS=c_interface/*.h
 
 # BSD cp does not have the -d flag
-ifeq ($(OSTYPE), Darwin)
+ifeq ($(OSTYPE), $(findstring $(OSTYPE), Darwin Freebsd))
 LIBRARIES=lib/libstp.dylib
 SNAME = libstp.dylib
 CP = cp -Rf

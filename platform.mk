@@ -19,7 +19,7 @@
 MACHTYPE = $(shell $(TOP)/platform.sh machtype)
 export MACHTYPE
 
-ifneq ($(MACHTYPE), $(findstring $(MACHTYPE), x86_64 i386 i486 i586 i686 ppc64le aarch64 armv7l))
+ifneq ($(MACHTYPE), $(findstring $(MACHTYPE), x86_64 i386 i486 i586 i686 ppc64le aarch64 armv7l amd64))
 $(error MACHTYPE environment not recognized: $(MACHTYPE))
 endif
 
@@ -29,7 +29,7 @@ endif
 OSTYPE = $(shell $(TOP)/platform.sh ostype)
 export OSTYPE
 
-ifneq ($(OSTYPE), $(findstring $(OSTYPE), Linux Darwin))
+ifneq ($(OSTYPE), $(findstring $(OSTYPE), Linux Darwin Freebsd))
 $(error OSTYPE environment not recognized: $(OSTYPE))
 endif
 
@@ -41,7 +41,7 @@ ifeq ($(MACHTYPE), $(findstring $(MACHTYPE), i386 i486 i586 i686))
 CFLAGS ?= -m32
 CXXFLAGS ?= -m32
 else
-ifeq ($(MACHTYPE), $(findstring $(MACHTYPE), x86_64))
+ifeq ($(MACHTYPE), $(findstring $(MACHTYPE), x86_64 amd64))
 # Set -m64 to be sure that CC is generating 64-bit
 CFLAGS ?= -m64
 CXXFLAGS ?= -m64
